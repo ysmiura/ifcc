@@ -1,6 +1,6 @@
 # Improving Factual Completeness and Consistency of Image-to-text Radiology Report Generation
 
-This repository contains the reference codes of [Improving Factual Completeness and Consistency of Image-to-text Radiology Report Generation]().
+This repository contains the reference codes of [Improving Factual Completeness and Consistency of Image-to-text Radiology Report Generation](https://arxiv.org/abs/2010.10042).
 
 ## Implemented Models
 * CNN-RNN-RNN ([Liu et al., 2019](https://arxiv.org/abs/1904.02633))
@@ -79,4 +79,4 @@ TensorBoard 2.0.0 at http://localhost:6006/ (Press CTRL+C to quit)
 ```
 
 ## Licence
-Details can be found in LICENSE and clinicgen/external/LICENSE_bleu-cider-rouge-spice.
+See LICENSE and clinicgen/external/LICENSE_bleu-cider-rouge-spice for details.
