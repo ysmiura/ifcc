@@ -17,7 +17,7 @@ dependencies:
   - chardet=3.0.4=py37_1003
   - click=7.1.2=py_0
   - cryptography=2.9.2=py37h1ba5d50_0
-  - cudatoolkit=10.2.89=hfd86e86_1
+  - cudatoolkit=10.1.243=h6bb024c_0
   - freetype=2.10.2=h5ab3b9f_0
   - google-auth=1.14.1=py_0
   - google-auth-oauthlib=0.4.1=py_2
@@ -60,7 +60,7 @@ dependencies:
   - pysocks=1.7.1=py37_0
   - python=3.7.7=hcff3b4d_5
   - python-dateutil=2.8.1=py_0
-  - pytorch=1.5.0=py3.7_cuda10.2.89_cudnn7.6.5_0
+  - pytorch=1.5.0=py3.7_cuda10.1.243_cudnn7.6.3_0
   - pytz=2020.1=py_0
   - readline=8.0=h7b6447c_0
   - requests=2.24.0=py_0
@@ -74,7 +74,7 @@ dependencies:
   - tensorboard=2.2.1=pyh532a8cf_0
   - tensorboard-plugin-wit=1.6.0=py_0
   - tk=8.6.10=hbc83047_0
-  - torchvision=0.6.0=py37_cu102
+  - torchvision=0.6.0=py37_cu101
   - urllib3=1.25.9=py_0
   - werkzeug=1.0.1=py_0
   - wheel=0.34.2=py37_0

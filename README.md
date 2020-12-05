@@ -12,6 +12,11 @@ This repository contains the reference codes of [Improving Factual Completeness 
 * MIMIC-CXR-JPG ([Johnson et al., 2019](https://doi.org/10.13026/8360-t248))
 * Open-i ([Demner-Fushman et al., 2016](https://lhncbc.nlm.nih.gov/publication/pub9189))
 
+## Prerequisites
+* A Linux OS (tested on Ubuntu 16.04)
+* Memory over 24GB
+* A gpu with memory over 12GB (tested on NVIDIA Titan X and NVIDIA Titan XP) 
+
 ## Preprocesses
 
 ### Python Setup
@@ -19,6 +24,9 @@ Create a conda environment
 ```bash
 $ conda env create -f environment.yml
 ```
+
+NOTE
+: `environment.yml` is set up for CUDA 10.1 and cuDNN 7.6.3. This may need to be changed depending on a runtime environment. 
 
 ### Resize MIMIC-CXR-JPG
 1. Download [MIMIC-CXR-JPG](https://physionet.org/content/mimic-cxr-jpg/2.0.0/)
@@ -30,13 +38,13 @@ $ conda env create -f environment.yml
 ### Compute Document Frequencies
 Pre-calculate document frequencies that will be used in CIDEr by:
 ```bash
-$ python cider-df.py MIMIC_CXR_ROOT mimic-cxr_train-df.bin.gz`
+$ python cider-df.py MIMIC_CXR_ROOT mimic-cxr_train-df.bin.gz
 ```
 
 ### Recognize Named Entities
 Pre-recognize named entities in MIMIC-CXR by:
 ```bash
-$ python ner_reports.py --stanza-download MIMIC_CXR_ROOT mimic-cxr_ner.txt.gz`
+$ python ner_reports.py --stanza-download MIMIC_CXR_ROOT mimic-cxr_ner.txt.gz
 ```
 
 ### Pre-train CheXpert Image Weights
@@ -57,10 +65,10 @@ $ ./download.sh
 First, train the Meshed-Memory Transformer model with an NLL loss.
 ```bash
 # NLL
-$ python train.py --cuda --corpus mimic-cxr --cache-data cache --epochs 32 --batch-size 24 --entity-match mimic-cxr_ner.txt.gz --img-model densenet --img-pretrained chexpert_densenet/model_auc14.dict.gz --bert-score distilbert-base-uncased --corpus mimic-cxr --lr-scheduler trans MIMIC_CXR_ROOT resources/glove_mimic-cxr_train.512.txt.gz out_m2trans_nll
+$ python train.py --cuda --corpus mimic-cxr --cache-data cache --epochs 32 --batch-size 24 --cider-df mimic-cxr_train-df.bin.gz --entity-match mimic-cxr_ner.txt.gz --img-model densenet --img-pretrained chexpert_densenet/model_auc14.dict.gz --cider-df mimic-cxr_train-df.bin.gz --bert-score distilbert-base-uncased --corpus mimic-cxr --lr-scheduler trans MIMIC_CXR_ROOT resources/glove_mimic-cxr_train.512.txt.gz out_m2trans_nll
 ```
 
-Secondly, further train the model a joint loss using the self-critical RL to achieve a better performance.
+Second, further train the model a joint loss using the self-critical RL to achieve a better performance.
 ```bash
 # RL with NLL + BERTScore + EntityMatchExact
 $ python train.py --cuda --corpus mimic-cxr --cache-data cache --epochs 32 --batch-size 24 --rl-epoch 1 --rl-metrics BERTScore,EntityMatchExact --rl-weights 0.01,0.495,0.495 --entity-match resources/mimic-cxr_ner.txt.gz --baseline-model out_m2trans_nll/model_31-152173.dict.gz --img-model densenet --img-pretrained chexpert_densenet/chexpert_auc14.dict.gz --cider-df mimic-cxr_train-df.bin.gz --bert-score distilbert-base-uncased --lr 5e-6 MIMIC_CXR_ROOT resources/glove_mimic-cxr_train.512.txt.gz out_m2trans_nll-bs-emexact
