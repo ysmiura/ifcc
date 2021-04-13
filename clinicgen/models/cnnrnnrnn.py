@@ -110,7 +110,7 @@ class CNNRNNRNN(_Image2Text):
                 if self.teacher_forcing is None or self.teacher_forcing.get_tfr() >= random.random():
                     w = yw[j]
                 else:
-                    w = vg.new_full(vg.shape[0], PretrainedEmbeddings.INDEX_PAD)
+                    w = vg.new_full((vg.shape[0], 1), PretrainedEmbeddings.INDEX_PAD)
         return torch.stack(sent_words, dim=1)
 
     def _loop_word_sample(self, vl, vg, t):
@@ -145,7 +145,7 @@ class CNNRNNRNN(_Image2Text):
         self.eval()
         with torch.no_grad():
             stops_greedy, words_greedy, _ = self.decode_beam(encoded_data, beam_size=1)
-            gens_greedy, _ = self.evaluator.recover_words(stops_greedy, words_greedy.squeeze(dim=1))
+            gens_greedy, _ = self.evaluator.recover_words(stops_greedy, words_greedy.squeeze(dim=2))
         self.train()
         stops, words, log_probs = self.sample(encoded_data)
         gens_sample, masks_sample = self.evaluator.recover_words(stops, words)
@@ -206,7 +206,7 @@ class CNNRNNRNN(_Image2Text):
                     logs['score_current'].append(logs_sent['score_current'])
                     logs['beam_buffer'].append(logs_sent['beam_buffer'])
             stops = torch.stack(stops, dim=1)
-            words = torch.stack(words, dim=2)
+            words = torch.stack(words, dim=1)
         return stops, words, logs
 
     def decode_teacher_forcing(self, y, vl, vg):
@@ -313,10 +313,10 @@ class CNNRNNRNN(_Image2Text):
             return '%.2f,%.2f' % (np.mean(loss_logs[2]), np.mean(loss_logs[3]))
 
     def meta_cuda(self, meta, device='gpu', non_blocking=False):
-        prev_targ, chex_image, vp = meta
+        vp = meta[0]
         if self.view_postion:
             vp = data_cuda(vp, device=device, non_blocking=non_blocking)
-        return prev_targ, chex_image, vp
+        return (vp,)
 
     def multi_cb(self, zs, cv, b, hw):
         if self.multi_image > 1:

@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='ifcc',
-    version='0.1.0',
+    version='0.2.0',
     author='Yasuhide Miura',
     author_email='ysmiura@stanford.edu',
     description='The code of: Improving Factual Completeness and Consistency of Image-to-text Radiology Report Generation',

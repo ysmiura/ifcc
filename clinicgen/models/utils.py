@@ -5,6 +5,7 @@ from clinicgen.models.cnnrnnrnn import CNNRNNRNN
 from clinicgen.models.kwl import KnowingWhenToLook
 from clinicgen.models.m2transformer import M2Transformer
 from clinicgen.models.sat import ShowAttendAndTell
+from clinicgen.models.tienet import TieNet
 from clinicgen.models.transformer import TransformerCaptioner, TransformerSimpleCaptioner
 from clinicgen.nli import SimpleNLI
 
@@ -16,7 +17,7 @@ class Models:
                   view_position=False, image_finetune_epoch=None, rl_opts=None, word_idxs=None, device='gpu',
                   parallel_sent=True, cnnrnnrnn_topic_state=False, cnnrnnrnn_simple_proj=False, sat_lstm_dim=1000,
                   trans_image_pe=True, trans_layers=6, trans_enc_layers=None, trans_layer_norm=False, m2_memory=40,
-                  verbose=False):
+                  tienet_labels=None, verbose=False):
         if trans_enc_layers is None:
             trans_enc_layers = trans_layers
         if name == 'cnnrnnrnn':
@@ -46,6 +47,12 @@ class Models:
                                       image_model=image_model, image_pretrained=image_pretrained,
                                       finetune_image=finetune_image, image_finetune_epoch=image_finetune_epoch,
                                       rl_opts=rl_opts, word_idxs=word_idxs, device=device, verbose=verbose)
+        elif name == 'tienet':
+            model = TieNet(embeddings, lstm_dim=hidden_size, max_word=max_word, multi_image=multi_image,
+                           multi_merge=multi_merge, labels=tienet_labels, teacher_forcing=teacher_forcing,
+                           image_model=image_model, image_pretrained=image_pretrained,
+                           finetune_image=finetune_image, image_finetune_epoch=image_finetune_epoch,
+                           rl_opts=rl_opts, word_idxs=word_idxs, device=device, verbose=verbose)
         elif name == 'trans':
             model = TransformerCaptioner(embeddings, feat_dim=hidden_size, max_word=max_word, multi_image=multi_image,
                                          image_pe=trans_image_pe, layer_norm=trans_layer_norm,

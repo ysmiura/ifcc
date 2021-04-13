@@ -1,16 +1,22 @@
 # Improving Factual Completeness and Consistency of Image-to-text Radiology Report Generation
 
-This repository contains the reference codes of [Improving Factual Completeness and Consistency of Image-to-text Radiology Report Generation](https://arxiv.org/abs/2010.10042).
+The reference code of [Improving Factual Completeness and Consistency of Image-to-text Radiology Report Generation](https://arxiv.org/abs/2010.10042).
 
 ## Implemented Models
 * CNN-RNN-RNN ([Liu et al., 2019](https://arxiv.org/abs/1904.02633))
 * Knowing When to Look ([Lu et al., 2017](https://arxiv.org/abs/1612.01887))
 * Meshed-Memory Transformer ([Cornia et al., 2020](https://arxiv.org/abs/1912.08226))
 * Show, Attend and Tell ([Xu et al., 2015](https://arxiv.org/abs/1502.03044))
+* TieNet ([Wang et al., 2018](https://arxiv.org/abs/1801.04334))
 
-## Supported Datasets
+## Supported Radiology Report Datasets
 * MIMIC-CXR-JPG ([Johnson et al., 2019](https://doi.org/10.13026/8360-t248))
-* Open-i ([Demner-Fushman et al., 2016](https://lhncbc.nlm.nih.gov/publication/pub9189))
+* Open-i ([Demner-Fushman et al., 2012](https://openi.nlm.nih.gov/))
+
+## Radiology NLI Dataset
+
+NOTE
+: We are working to make the radiology NLI dataset publicly available.
 
 ## Prerequisites
 * A Linux OS (tested on Ubuntu 16.04)

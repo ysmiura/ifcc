@@ -91,7 +91,7 @@ def main(args):
                              cnnrnnrnn_simple_proj=args.cnnrnnrnn_simple_proj, sat_lstm_dim=args.sat_lstm_dim,
                              trans_image_pe=args.img_pe, trans_layers=args.trans_layers,
                              trans_enc_layers=args.trans_enc_layers, trans_layer_norm=args.trans_layer_norm,
-                             m2_memory=args.m2_memory, verbose=args.verbose)
+                             m2_memory=args.m2_memory, tienet_labels=args.tienet_labels, verbose=args.verbose)
     if device == 'gpu':
         model = model.cuda()
     optimizers, schedulers, batch_schedulers = Optimizers.get_optmizers(model, args.lr, args.lr_img, args.lr_step,
@@ -210,7 +210,7 @@ def parse_args():
     parser.add_argument('--m2-memory', type=int, default=40, help='M2 Transformer memory size')
     parser.add_argument('--max-sent', type=int, default=1, help='Max sentence num')
     parser.add_argument('--max-word', type=int, default=128, help='Max word num')
-    parser.add_argument('--model', type=str, default='m2trans', choices=['cnnrnnrnn', 'kwl', 'm2trans', 'sat', 'trans', 'trans-s'])
+    parser.add_argument('--model', type=str, default='m2trans', choices=['cnnrnnrnn', 'kwl', 'm2trans', 'sat', 'tienet', 'trans', 'trans-s'])
     parser.add_argument('--model-save', type=str, default=None, help='A model save path')
     parser.add_argument('--multi-image', type=int, default=3, help='Multi image number')
     parser.add_argument('--multi-merge', type=str, default='max', choices=['att', 'max'], help='A merge method for multi images')
@@ -241,6 +241,7 @@ def parse_args():
     parser.add_argument('--tfr', type=float, default=1.0, help='Teacher forcing rate')
     parser.add_argument('--tfr-step', type=int, default=None, help='Teacher forcing step')
     parser.add_argument('--textfilter', type=str, default='lower', help='Text filter')
+    parser.add_argument('--tienet-labels', type=str, default=None, help='TieNet labels')
     parser.add_argument('--tokenfilter', type=str, default='none', help='Token filter')
     parser.add_argument('--tokenizer', type=str, default='nltk', choices=['nltk', 'none', 'stanford', 'whitespace'], help='Tokenizer name')
     parser.add_argument('--tqdm-interval', type=int, default=None, help='tqdm interval')
