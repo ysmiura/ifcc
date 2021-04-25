@@ -77,11 +77,11 @@ $ python train.py --cuda --corpus mimic-cxr --cache-data cache --epochs 32 --bat
 Second, further train the model a joint loss using the self-critical RL to achieve a better performance.
 ```bash
 # RL with NLL + BERTScore + EntityMatchExact
-$ python train.py --cuda --corpus mimic-cxr --cache-data cache --epochs 32 --batch-size 24 --rl-epoch 1 --rl-metrics BERTScore,EntityMatchExact --rl-weights 0.01,0.495,0.495 --entity-match resources/mimic-cxr_ner.txt.gz --baseline-model out_m2trans_nll/model_31-152173.dict.gz --img-model densenet --img-pretrained chexpert_densenet/chexpert_auc14.dict.gz --cider-df mimic-cxr_train-df.bin.gz --bert-score distilbert-base-uncased --lr 5e-6 MIMIC_CXR_ROOT resources/glove_mimic-cxr_train.512.txt.gz out_m2trans_nll-bs-emexact
+$ python train.py --cuda --corpus mimic-cxr --cache-data cache --epochs 32 --batch-size 24 --rl-epoch 1 --rl-metrics BERTScore,EntityMatchExact --rl-weights 0.01,0.495,0.495 --entity-match resources/mimic-cxr_ner.txt.gz --baseline-model out_m2trans_nll/model_31-152173.dict.gz --img-model densenet --img-pretrained chexpert_densenet/chexpert_auc14.dict.gz --cider-df mimic-cxr_train-df.bin.gz --bert-score distilbert-base-uncased --lr 5e-6 --lr-step 32 MIMIC_CXR_ROOT resources/glove_mimic-cxr_train.512.txt.gz out_m2trans_nll-bs-emexact
 ```
 ```bash
 # RL with NLL + BERTScore + EntityMatchNLI
-$ python train.py --cuda --corpus mimic-cxr --cache-data cache --epochs 32 --batch-size 24 --rl-epoch 1 --rl-metrics BERTScore,EntityMatchNLI --rl-weights 0.01,0.495,0.495 --entity-match resources/mimic-cxr_ner.txt.gz --baseline-model out_m2trans_nll/model_31-152173.dict.gz --img-model densenet --img-pretrained chexpert_densenet/chexpert_auc14.dict.gz --cider-df mimic-cxr_train-df.bin.gz --bert-score distilbert-base-uncased --lr 5e-6 MIMIC_CXR_ROOT resources/glove_mimic-cxr_train.512.txt.gz out_m2trans_nll-bs-emnli
+$ python train.py --cuda --corpus mimic-cxr --cache-data cache --epochs 32 --batch-size 24 --rl-epoch 1 --rl-metrics BERTScore,EntityMatchNLI --rl-weights 0.01,0.495,0.495 --entity-match resources/mimic-cxr_ner.txt.gz --baseline-model out_m2trans_nll/model_31-152173.dict.gz --img-model densenet --img-pretrained chexpert_densenet/chexpert_auc14.dict.gz --cider-df mimic-cxr_train-df.bin.gz --bert-score distilbert-base-uncased --lr 5e-6 --lr-step 32 MIMIC_CXR_ROOT resources/glove_mimic-cxr_train.512.txt.gz out_m2trans_nll-bs-emnli
 ```
 
 ### Checking Result with TensorBoard
