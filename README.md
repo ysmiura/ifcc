@@ -87,15 +87,15 @@ TensorBoard 2.0.0 at http://localhost:6006/ (Press CTRL+C to quit)
 ### Evaluation using CheXbert
 NOTE: This evaluation assumes that [CheXbert](https://github.com/stanfordmlgroup/CheXbert) is set up in `./CheXbert`.
 
-First, extract reference reports.
+First, extract reference reports to a csv file.
 ```bash
 $ python extract_reports.csv MIMIC_CXR_ROOT/mimic-cxr-resized/2.0.0/mimic_cxr_sectioned.csv.gz MIMIC_CXR_ROOT/mimic-cxr-resized/2.0.0/mimic-cxr-2.0.0-split.csv.gz mimic-imp
 $ mv mimic-imp CheXbert/src/
 ```
 
-Second, convert generated reports.(TEST_SAMPLES is a path to test samples. e.g., `out_m2trans_nll-bs-emnli/test_31-152173_samples.txt.gz` )
+Second, convert generated reports to a csv file. (TEST_SAMPLES is a path to test samples. e.g., `out_m2trans_nll-bs-emnli/test_31-152173_samples.txt.gz`)
 ```bash
-$ python convertt_reports.csv TEST_SAMPLES gen.csv
+$ python convert_generated.py TEST_SAMPLES gen.csv
 $ mv gen.csv CheXbert/src/
 ```
 
@@ -105,7 +105,7 @@ $ cd CheXbert/src/
 $ python label.py -d mimic-imp/reports.csv -o mimic-imp -c chexbert.pth
 ```
 
-Fourth, run `eval_prf.py`.
+Fourth, run `eval_prf.py` to obtain CheXbert scores.
 ```bash
 $ cp ../../eval_prf.py . 
 $ python eval_prf.py mimic-imp gen.csv gen_chex.csv
