@@ -213,6 +213,8 @@ class TransformerSimpleCaptioner(_TransformerCaptioner):
         mask = (x.detach().sum(dim=(1, 2, 3)) != 0).type(torch.float).unsqueeze(dim=-1).unsqueeze(dim=-1)
         if self.multi_image > 1:
             nz = mask.squeeze().nonzero().squeeze()
+            if len(nz.shape) == 0:
+                nz = x.new([0]).type(torch.long)
             x_nz = x[nz]
         else:
             x_nz, nz = x, None
@@ -271,6 +273,8 @@ class TransformerCaptioner(TransformerSimpleCaptioner):
         mask = (x.detach().sum(dim=(1, 2, 3)) != 0).type(torch.float).unsqueeze(dim=-1).unsqueeze(dim=-1)
         if self.multi_image > 1:
             nz = mask.squeeze().nonzero().squeeze()
+            if len(nz.shape) == 0:
+                nz = x.new([0]).type(torch.long)
             x_nz = x[nz]
         else:
             x_nz, nz = x, None

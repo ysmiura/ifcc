@@ -374,9 +374,9 @@ class M2Transformer(_TransformerCaptioner):
         mask = (x.detach().sum(dim=(1, 2, 3)) != 0).type(torch.float).unsqueeze(dim=-1).unsqueeze(dim=-1)
         if self.multi_image > 1:
             nz = mask.squeeze().nonzero().squeeze()
-            x_nz = x[nz]
             if len(nz.shape) == 0:
-                x_nz = x_nz.unsqueeze(dim=0)
+                nz = x.new([0]).type(torch.long)
+            x_nz = x[nz]
         else:
             x_nz, nz = x, None
         # Image features

@@ -15,8 +15,7 @@ The reference code of [Improving Factual Completeness and Consistency of Image-t
 
 ## Radiology NLI Dataset
 
-NOTE
-: We are working to make the radiology NLI dataset publicly available.
+NOTE: We are working to make the radiology NLI dataset publicly available.
 
 ## Prerequisites
 * A Linux OS (tested on Ubuntu 16.04)
@@ -83,6 +82,38 @@ A training result can be checked with TensorBoard.
 $ tensorboard --logdir out_m2trans_nll-bs-emnli/log
 Serving TensorBoard on localhost; to expose to the network, use a proxy or pass --bind_all
 TensorBoard 2.0.0 at http://localhost:6006/ (Press CTRL+C to quit)
+```
+
+### Evaluation using CheXbert
+NOTE: This evaluation assumes that [CheXbert](https://github.com/stanfordmlgroup/CheXbert) is set up in `./CheXbert`.
+
+First, extract reference reports.
+```bash
+$ python extract_reports.csv MIMIC_CXR_ROOT/mimic-cxr-resized/2.0.0/mimic_cxr_sectioned.csv.gz MIMIC_CXR_ROOT/mimic-cxr-resized/2.0.0/mimic-cxr-2.0.0-split.csv.gz mimic-imp
+$ mv mimic-imp CheXbert/src/
+```
+
+Second, convert generated reports.(TEST_SAMPLES is a path to test samples. e.g., `out_m2trans_nll-bs-emnli/test_31-152173_samples.txt.gz` )
+```bash
+$ python convertt_reports.csv TEST_SAMPLES gen.csv
+$ mv gen.csv CheXbert/src/
+```
+
+Third, run CheXbert against the reference reports.
+```bash
+$ cd CheXbert/src/
+$ python label.py -d mimic-imp/reports.csv -o mimic-imp -c chexbert.pth
+```
+
+Fourth, run `eval_prf.py`.
+```bash
+$ cp ../../eval_prf.py . 
+$ python eval_prf.py mimic-imp gen.csv gen_chex.csv
+2947 references
+2347 generated
+...
+5-micro x.xxx x.xxx x.xxx
+5-acc x.xxx
 ```
 
 ## Licence
