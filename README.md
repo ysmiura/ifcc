@@ -15,7 +15,7 @@ The reference code of [Improving Factual Completeness and Consistency of Image-t
 
 ## Radiology NLI Dataset
 
-NOTE: We are working to make the radiology NLI dataset publicly available.
+The Radiology NLI dataset (RadNLI) is available at [a corresponding PhysioNet project](https://doi.org/10.13026/mmab-c762).
 
 ## Prerequisites
 * A Linux OS (tested on Ubuntu 16.04)
