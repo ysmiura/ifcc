@@ -128,8 +128,6 @@ class FileLogger:
             if scheduler_tfr is not None:
                 state['scheduler_tfr'] = scheduler_tfr.state_dict()
             torch.save(state, out)
-        if device == 'gpu' and torch.cuda.device_count() > 1:
-            model.to_parallel()
 
     def close(self):
         for f in self.scores.values():

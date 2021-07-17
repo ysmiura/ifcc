@@ -1,0 +1,3 @@
+[checkpoint_nll-bs.dict.gz] An M2 Transformer checkpoint trained with NLL+BERTScore
+[checkpoint_nll-bs-emexact.dict.gz] An M2 Transformer checkpoint trained with NLL+BERTScore+EntityMatchExact
+[checkpoint_nll-bs.emnli.gz] An M2 Transformer checkpoint trained with NLL+BERTScore+EntityMatchNLI
