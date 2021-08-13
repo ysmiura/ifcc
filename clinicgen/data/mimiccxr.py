@@ -103,6 +103,7 @@ class MIMICCXRData(_RadiologyReportData):
 
     def __getitem__(self, index):
         rid, sample, target, _ = super().__getitem__(index)
+        did = self.doc_ids[index]
         # View position features
         if self.multi_image > 1:
             vp = [self.view_position_embedding(self.view_positions[iid]) for iid in self.image_ids[index]]
@@ -116,7 +117,7 @@ class MIMICCXRData(_RadiologyReportData):
             vp = torch.cat(vp, dim=0)
         else:
             vp = self.view_position_embedding(self.view_positions[rid])
-        return rid, sample, target, vp
+        return did + '__' + rid, sample, target, vp
 
     @classmethod
     def get_transform(cls, cache_image=False, mode='center', augment=False):

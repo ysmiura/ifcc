@@ -63,19 +63,20 @@ class TieNet(_Image2Text):
     def _load_labels(cls, path):
         # labels
         chexpert_labels = {}
-        with gzip.open(path, 'rt', encoding='utf-8') as f:
-            header = f.readline()
-            reader = csv.reader(f)
-            for row in reader:
-                ls = np.zeros((13,), dtype='long')
-                for i, l in enumerate(row[2:]):
-                    if i != 8:
-                        j = i if i < 8 else i - 1
-                        if l == '1.0' or l == '-1.0':
-                            ls[j] = 1
-                        else:
-                            ls[j] = 0
-                chexpert_labels[row[1]] = ls
+        if path is not None:
+            with gzip.open(path, 'rt', encoding='utf-8') as f:
+                header = f.readline()
+                reader = csv.reader(f)
+                for row in reader:
+                    ls = np.zeros((13,), dtype='long')
+                    for i, l in enumerate(row[2:]):
+                        if i != 8:
+                            j = i if i < 8 else i - 1
+                            if l == '1.0' or l == '-1.0':
+                                ls[j] = 1
+                            else:
+                                ls[j] = 0
+                    chexpert_labels[row[1]] = ls
         # weights
         p, n = 0, 0
         q = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}

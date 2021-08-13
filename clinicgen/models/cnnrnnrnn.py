@@ -175,8 +175,8 @@ class CNNRNNRNN(_Image2Text):
             t = t.view((batch_size * self.max_sent, self.feat_dim))
             # Decodes words
             words, logs_sent = self._decode_loop_word(vl, vg, t, beam_size, allow_stop, recover_words, diversity_rate)
-            # Convert decoded words to NxBxSxW
-            words = words.view((batch_size, self.max_sent, beam_size, self.max_word)).permute((0, 2, 1, 3))
+            # Convert decoded words to NxSxBxW
+            words = words.view((batch_size, self.max_sent, beam_size, self.max_word))
             if recover_words is not None:
                 logs['word'].append(logs_sent['word'])
                 logs['score'].append(logs_sent['score'])
