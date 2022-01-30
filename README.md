@@ -20,7 +20,7 @@ The Radiology NLI dataset (RadNLI) is available at [a corresponding PhysioNet pr
 ## Prerequisites
 * A Linux OS (tested on Ubuntu 16.04)
 * Memory over 24GB
-* A gpu with memory over 12GB (tested on NVIDIA Titan X and NVIDIA Titan XP) 
+* A gpu with memory over 12GB (tested on NVIDIA Titan X and NVIDIA Titan XP)
 
 ## Preprocesses
 
@@ -31,7 +31,7 @@ $ conda env create -f environment.yml
 ```
 
 NOTE
-: `environment.yml` is set up for CUDA 10.1 and cuDNN 7.6.3. This may need to be changed depending on a runtime environment. 
+: `environment.yml` is set up for CUDA 10.1 and cuDNN 7.6.3. This may need to be changed depending on a runtime environment.
 
 ### Resize MIMIC-CXR-JPG
 1. Download [MIMIC-CXR-JPG](https://physionet.org/content/mimic-cxr-jpg/2.0.0/)
@@ -107,7 +107,7 @@ $ python label.py -d mimic-imp/reports.csv -o mimic-imp -c chexbert.pth
 
 Fourth, run `eval_prf.py` to obtain CheXbert scores.
 ```bash
-$ cp ../../eval_prf.py . 
+$ cp ../../eval_prf.py .
 $ python eval_prf.py mimic-imp gen.csv gen_chex.csv
 2947 references
 2347 generated
@@ -127,6 +127,13 @@ Pre-trained checkpoints for M2 Transformer can be obtained with a download scrip
 ```bash
 $ cd checkpoints
 $ ./download.sh
+```
+
+## Make the RadNLI pseudo training data used in the paper
+
+The RadNLI pseudo training data can be made with `make_radnli-pseudo-train.py`.
+```bash
+$ python make_radnli-pseudo-train.py MIMIC_CXR_ROOT/mimic-cxr-resized/2.0.0/mimic_cxr_sectioned.csv.gz
 ```
 
 ## Licence
