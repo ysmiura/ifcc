@@ -70,7 +70,7 @@ def main(args):
                              trans_enc_layers=args.trans_enc_layers, trans_layer_norm=args.trans_layer_norm,
                              m2_memory=args.m2_memory, tienet_labels=args.tienet_labels, verbose=args.verbose)
     if device == 'gpu':
-        model = model.cuda()
+        model = model.cuda(0)
 
     # Train and test processes
     evaluator = GenEval(model, word_idxs, beam_size=args.beam_size, cider_df=cider_df, spice=args.spice,

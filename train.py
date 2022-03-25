@@ -93,7 +93,7 @@ def main(args):
                              trans_enc_layers=args.trans_enc_layers, trans_layer_norm=args.trans_layer_norm,
                              m2_memory=args.m2_memory, tienet_labels=args.tienet_labels, verbose=args.verbose)
     if device == 'gpu':
-        model = model.cuda()
+        model = model.cuda(0)
     optimizers, schedulers, batch_schedulers = Optimizers.get_optmizers(model, args.lr, args.lr_img, args.lr_step,
                                                                         args.lr_scheduler, 0.5, beta1=args.adam_beta1,
                                                                         beta2=args.adam_beta2, train_steps=train_steps,

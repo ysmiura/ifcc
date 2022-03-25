@@ -50,8 +50,7 @@ class BERTNLI(torch.nn.Module):
 
     def cuda(self, device=None):
         super(BERTNLI, self).cuda(device)
-        if device != torch.device('cpu'):
-            self.device = 'gpu'
+        self.device = 'gpu'
 
     def forward(self, sent1s, sent2s):
         buffer, boundaries, max_len = [], [], 0

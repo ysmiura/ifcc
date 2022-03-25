@@ -11,7 +11,7 @@ def data_cuda(*tensors, device='gpu', non_blocking=False):
     if device == 'gpu':
         cuda_tensors = []
         for tensor in tensors:
-            cuda_tensors.append(tensor.cuda(non_blocking=non_blocking))
+            cuda_tensors.append(tensor.cuda(device=0, non_blocking=non_blocking))
     else:
         cuda_tensors = tensors
 

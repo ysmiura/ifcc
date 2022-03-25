@@ -442,9 +442,9 @@ class _Image2Text(torch.nn.Module):
         return words, lprobs
 
     def cuda(self, device=None):
-        super(_Image2Text, self).cuda()
+        super(_Image2Text, self).cuda(device)
         if self.evaluator is not None:
-            self.evaluator = self.evaluator.cuda()
+            self.evaluator = self.evaluator.cuda(device)
         return self
 
     def decode_beam(self, encoded_data, beam_size, allow_stop=True, recover_words=None, diversity_rate=0.0):

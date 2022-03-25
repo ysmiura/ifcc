@@ -67,11 +67,11 @@ class _NLIScorer:
         self.verbose = verbose
         self.gpu = False
 
-    def cuda(self):
-        self.model = self.model.cuda()
+    def cuda(self, device=None):
+        self.model = self.model.cuda(device)
         self.gpu = True
         if self.bert_score_model is not None:
-            self.bert_score_model = self.bert_score_model.cuda()
+            self.bert_score_model = self.bert_score_model.cuda(device)
         return self
 
     def predict(self, premises, hypotheses):
@@ -519,9 +519,9 @@ class BERTScorer:
             else:
                 print(f'Warning: Baseline not Found for {model_type} on {lang} at {baseline_path}', file=sys.stderr)
 
-    def cuda(self):
+    def cuda(self, device=None):
         self.device = 'cuda:0'
-        self.model.cuda()
+        self.model.cuda(device)
         return self
 
     def score(self, cands, refs):
@@ -621,4 +621,3 @@ class SimpleNLI(_NLIScorer):
                     else:
                         raise ValueError('Unknown label index {0}'.format(idx))
         return probs, preds
-

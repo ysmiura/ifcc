@@ -94,9 +94,9 @@ class EntityMatcher:
                 best_prob = prob
         return best_label, best_prob
 
-    def cuda(self):
+    def cuda(self, device=None):
         if self.nli is not None:
-            self.nli = self.nli.cuda()
+            self.nli = self.nli.cuda(device)
         return self
 
     def score(self, rids, hypos):
@@ -439,14 +439,14 @@ class GenEval:
         if self.entity_matcher is not None:
             self.entity_matcher = None
 
-    def cuda(self):
+    def cuda(self, device=None):
         self.device = 'gpu'
         if self.nli_model is not None:
-            self.nli_model = self.nli_model.cuda()
+            self.nli_model = self.nli_model.cuda(device)
         if self.bert_score_model is not None:
-            self.bert_score_model = self.bert_score_model.cuda()
+            self.bert_score_model = self.bert_score_model.cuda(device)
         if self.entity_matcher is not None:
-            self.entity_matcher = self.entity_matcher.cuda()
+            self.entity_matcher = self.entity_matcher.cuda(device)
         return self
 
     def eval(self, ids, refs, hypos, tfidf_vectorizer=None, ref_ids=None):

@@ -81,7 +81,7 @@ def main(args):
                                 dropout=args.dropout, pretrained=args.pretrained)
     if args.cuda:
         device = 'gpu'
-        model = model.cuda()
+        model = model.cuda(0)
     else:
         device = 'cpu'
 

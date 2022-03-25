@@ -24,7 +24,7 @@ class EpochLog:
         results = {}
         logger.evaluator.setup()
         if logger.device == 'gpu':
-            logger.evaluator.cuda()
+            logger.evaluator.cuda(0)
         for split, data_loader in [('val', val_loader), ('test', test_loader)]:
             prog_name = split if progress else None
             results[split] = logger.evaluator.generate_and_eval(data_loader, prog_name)
